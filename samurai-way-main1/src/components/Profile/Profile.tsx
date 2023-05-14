@@ -5,7 +5,11 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
 type ProfilePropsType = {
-   posts: PostsType[]
+    profilePageData: ProfilePageDataType
+
+}
+type ProfilePageDataType = {
+    posts: PostsType[]
 }
 
 
@@ -13,7 +17,7 @@ export const  Profile = (props: ProfilePropsType) => {
     return (
         <div >
             <ProfileInfo/>
-            <MyPosts posts={props.posts}/>
+            <MyPosts posts={props.profilePageData.posts}/>
         </div>
     )
 }
