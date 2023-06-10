@@ -1,19 +1,33 @@
-import {DialogsType, MessagesType} from "../components/Dialogs/Dialogs";
-import {PostsType} from "../components/Profile/MyPosts/MyPosts";
-
 
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: SideBarType
 }
+
 export type ProfilePageType = {
     posts: PostsType[]
+}
+export type PostsType = {
+    id: string,
+    message: string,
+    likesCount: string
 }
 
 export type DialogsPageType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
 }
+export type DialogsType = {
+    id: string,
+    name: string
+}
+export type MessagesType = {
+    id?: string
+    message: string
+}
+
+export type SideBarType = {}
 
 export let state: StateType = {
     profilePage: {
@@ -38,8 +52,9 @@ export let state: StateType = {
             {id: "2", message: "How are you?"},
             {id: "3", message: "I was glad to get message from you."},
             {id: "4", message: "Hello!"}
-        ]
-    }
+        ],
+    },
+    sidebar: {}
 }
 
 
