@@ -16,20 +16,23 @@ export type DialogsType = {
     id: string,
     name: string
 }
-export type MessagesType ={
+export type MessagesType = {
     id?: string
     message: string
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
+    let dialogsElements = props.dialogsPageData.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
+    let messageElements = props.dialogsPageData.messages.map(m => <Message message={m.message}/>)
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                {props.dialogsPageData.dialogs.map( d => <DialogItem name={d.name} id={d.id}/>) }
+                {dialogsElements}
             </div>
             <div className={s.messages}>
-                {props.dialogsPageData.messages.map( m => <Message message={m.message}/>)}
+                {messageElements}
             </div>
         </div>
     )
