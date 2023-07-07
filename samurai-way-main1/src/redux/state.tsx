@@ -1,7 +1,3 @@
-let rerenderEntireTree = () => {
-    console.log('hello')
-}
-
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -33,55 +29,72 @@ export type MessagesType = {
 
 export type SideBarType = {}
 
-export const state: StateType = {
-    profilePage: {
-        posts: [
-    {id: "1", message: "Hi!", likesCount: '12'},
-    {id: "2", message: "It's my first post", likesCount: '18'},
-    {id: "3", message: "It's my second post", likesCount: '25'},
-    {id: "4", message: "It's my third post", likesCount: '31'}
-],
-        newPostText: 'it'
-    },
-    dialogsPage: {
-        dialogs: [
-            {id: "1", name: "Dimych"},
-            {id: "2", name: "Andrey"},
-            {id: "3", name: "Sveta"},
-            {id: "4", name: "Valeriy"},
-            {id: "5", name: "Victor"},
-            {id: "6", name: "Sasha"},
-        ],
-        messages: [
-            {id: "1", message: "Hi!"},
-            {id: "2", message: "How are you?"},
-            {id: "3", message: "I was glad to get message from you."},
-            {id: "4", message: "Hello!"}
-        ],
-    },
-    sidebar: {}
+export type StoreType = {
+    _state: StateType
+    _callSubscriber: (_state: StateType) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    subscribe: (observer: () => void) => void
+    getState: () => StateType
 }
 
-export const addPost = () => {
 
-    const newPost: PostsType  = {
-        id: "5",
-        message: state.profilePage.newPostText,
-        likesCount: '0'
+export const store: StoreType = {
+    _state: {
+        profilePage: {
+            posts: [
+                {id: "1", message: "Hi!", likesCount: '12'},
+                {id: "2", message: "It's my first post", likesCount: '18'},
+                {id: "3", message: "It's my second post", likesCount: '25'},
+                {id: "4", message: "It's my third post", likesCount: '31'}
+            ],
+            newPostText: 'it'
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: "1", name: "Dimych"},
+                {id: "2", name: "Andrey"},
+                {id: "3", name: "Sveta"},
+                {id: "4", name: "Valeriy"},
+                {id: "5", name: "Victor"},
+                {id: "6", name: "Sasha"},
+            ],
+            messages: [
+                {id: "1", message: "Hi!"},
+                {id: "2", message: "How are you?"},
+                {id: "3", message: "I was glad to get message from you."},
+                {id: "4", message: "Hello!"}
+            ],
+        },
+        sidebar: {}
+    },
+    _callSubscriber() {
+        console.log('hello')
+    },
+    addPost() {
+        const newPost: PostsType = {
+            id: "5",
+            message: this._state.profilePage.newPostText,
+            likesCount: '0'
+        }
+        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.newPostText = ""
+        this._callSubscriber(this._state)
+    },
+    updateNewPostText(newText) {
+        this._state.profilePage.newPostText = newText
+        this._callSubscriber(this._state)
+    },
+    subscribe (observer)  {
+        this._callSubscriber = observer //наблюдатель паттерн
+    },
+    getState() {
+        return this._state
     }
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText = ""
-    rerenderEntireTree()
 }
 
-export const updateNewPostText = (newText: string) => {
-        state.profilePage.newPostText = newText
-        rerenderEntireTree()
-}
-
-export const subscribe = (observer: () => void) => {
-    rerenderEntireTree = observer //наблюдатель паттерн
-}
+// @ts-ignore
+window.store = store
 
 
 

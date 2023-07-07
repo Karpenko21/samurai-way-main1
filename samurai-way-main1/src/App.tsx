@@ -8,7 +8,7 @@ import {Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {StateType, updateNewPostText} from "./redux/state";
+import {StateType, StoreType} from "./redux/state";
 
 type AppPropsType = {
     state: StateType
@@ -30,7 +30,7 @@ const App = (props: AppPropsType) => {
                            <Profile
                                profilePageData={props.state.profilePage}
                                addPost={props.addPost}
-                               updateNewPostText={updateNewPostText}/>}
+                               updateNewPostText={props.updateNewPostText}/>}
                 />
                 <Route path="/news" component={News}/>
                 <Route path="/music" component={Music}/>
