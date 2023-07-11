@@ -1,12 +1,12 @@
 import React, {ChangeEvent, RefObject, useState} from "react";
 import s from "./MyPosts.module.css";
 import {Post} from "./Posts/Post";
-import {addPostAC, PostsType, updateNewPostTextAC} from "../../../redux/state";
+import {ActionTypes, addPostAC, PostsType, updateNewPostTextAC} from "../../../redux/state";
 
 export  type MyPostsPropsType = {
     posts: PostsType[]
     newPostText: string
-    dispatch: (action: any) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 
