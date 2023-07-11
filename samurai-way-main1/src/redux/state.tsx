@@ -32,10 +32,9 @@ export type SideBarType = {}
 export type StoreType = {
     _state: StateType
     _callSubscriber: (_state: StateType) => void
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
+    dispatch: (action: any) => void
 }
 
 
@@ -48,7 +47,7 @@ export const store: StoreType = {
                 {id: "3", message: "It's my second post", likesCount: '25'},
                 {id: "4", message: "It's my third post", likesCount: '31'}
             ],
-            newPostText: 'it'
+            newPostText: ''
         },
         dialogsPage: {
             dialogs: [
@@ -71,26 +70,30 @@ export const store: StoreType = {
     _callSubscriber() {
         console.log('hello')
     },
-    addPost() {
-        const newPost: PostsType = {
-            id: "5",
-            message: this._state.profilePage.newPostText,
-            likesCount: '0'
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ""
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
-    subscribe (observer)  {
+
+    subscribe(observer) {
         this._callSubscriber = observer //наблюдатель паттерн
     },
     getState() {
         return this._state
-    }
+    },
+
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostsType = {
+                id: "5",
+                message: this._state.profilePage.newPostText,
+                likesCount: '0'
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ""
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
+            }
 }
 
 // @ts-ignore
