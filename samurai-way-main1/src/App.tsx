@@ -13,6 +13,7 @@ import {ActionTypes, StateType, StoreType} from "./redux/state";
 type AppPropsType = {
     state: StateType
     dispatch: (action: ActionTypes) => void
+    store: StoreType
 }
 
 const App = (props: AppPropsType) => {
@@ -23,7 +24,7 @@ const App = (props: AppPropsType) => {
             <div className="app-wrapper-content">
                 <Route path="/dialogs"
                        render={() => <Dialogs
-                           dialogsPageData={props.state.dialogsPage}/>}/>
+                           store={props.store}/>}/>
                 <Route path="/profile"
                        render={() =>
                            <Profile
