@@ -2,34 +2,28 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {sendMessageAC, StoreType, updateNewMessageTextAC} from "../../redux/state";
+import {DialogsPageType, sendMessageAC, StoreType, updateNewMessageTextAC} from "../../redux/store";
 
 type DialogsPropsType = {
-    store: StoreType
-
+    updateNewMessageText: (text: string) => void
+    sendMessage: () => void
+    dialogsPage: DialogsPageType
 }
-/*type DialogsPageDataType = {
-    dialogs: DialogsType[]
-    messages: MessagesType[]
-    newMessageText: string
-}*/
-
-
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    const dialogsElements = props.store._state.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
-    const messageElements = props.store._state.dialogsPage.messages.map(m => <Message message={m.message}/>)
+    const dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
+    const messageElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>)
 
-    const newMessageText = props.store._state.dialogsPage.newMessageText
+    const newMessageText = props.dialogsPage.newMessageText
 
 
     const onSendMessageClick = () => {
-        props.store.dispatch(sendMessageAC())
+        props.sendMessage()
     }
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-       props.store.dispatch(updateNewMessageTextAC(e.target.value))
+       props.updateNewMessageText(e.target.value)
     }
 
 
