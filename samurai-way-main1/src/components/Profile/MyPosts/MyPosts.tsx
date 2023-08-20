@@ -17,10 +17,12 @@ export const MyPosts = (props: MyPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
+        debugger
         props.dispatch(addPostAC())
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
        props.dispatch(updateNewPostTextAC(e.currentTarget.value))
     }
 
